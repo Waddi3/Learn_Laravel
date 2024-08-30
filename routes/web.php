@@ -1,4 +1,9 @@
 <?php
+
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\HomeControler;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +26,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('home.contact');
 // })->name('home.contact');
 
-Route::view('/', 'home.index')
+Route::get('/', [HomeControler::class, 'home'])
     ->name('home.index');
 
-Route::view('/contact', 'home.contact')
+Route::get('/contact', [HomeControler::class, 'contact'])
     ->name('home.contact');
+
+Route::get('single', AboutController::class);
 
 $posts = [
     1 => [
@@ -46,23 +53,24 @@ $posts = [
     ]
 ];
 
-Route::get('/posts', function () use ($posts) {
-   // dd(request()->all());
-    dd((int)request()->query('page',1));
-    return view('posts.index', ['posts' => $posts]);
-});
+// Route::get('/posts', function () use ($posts) {
+//    // dd(request()->all());
+//     dd((int)request()->query('page',1));
+//     return view('posts.index', ['posts' => $posts]);
+// });
 
-Route::get('/posts/{id}', function ($id) use ($posts) {
+// Route::get('/posts/{id}', function ($id) use ($posts) {
 
-    // abort_if(!array_key_exists($id, $posts), 404);
+//     // abort_if(!array_key_exists($id, $posts), 404);
 
-    abort_if(!isset($posts[$id]), 404);
-    return view('posts.show', ['post' => $posts[$id]]);
-})
-    // ->where([
-    //     'id' => '[0-9]+'
-    // ])
-    ->name('posts.show');
+//     abort_if(!isset($posts[$id]), 404);
+//     return view('posts.show', ['post' => $posts[$id]]);
+// })
+//     // ->where([
+//     //     'id' => '[0-9]+'
+//     // ])
+//     ->name('posts.show');
+Route::resource('posts', PostsController::class)->only('index' , 'show');
 
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return 'post from ' . $daysAgo . ' days ago';
