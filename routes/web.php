@@ -70,7 +70,8 @@ $posts = [
 //     //     'id' => '[0-9]+'
 //     // ])
 //     ->name('posts.show');
-Route::resource('posts', PostsController::class)->only('index' , 'show');
+Route::resource('posts', PostsController::class)
+    ->only('index' , 'show', 'create', 'store');
 
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return 'post from ' . $daysAgo . ' days ago';
