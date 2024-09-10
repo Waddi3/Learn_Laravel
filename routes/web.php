@@ -71,10 +71,10 @@ $posts = [
 //     // ])
 //     ->name('posts.show');
 Route::resource('posts', PostsController::class)
-    ->only('index' , 'show', 'create', 'store');
+    ->only('index' , 'show', 'create', 'store', 'edit', 'update', 'destroy');
 
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
-    return 'post from ' . $daysAgo . ' days ago';
+    return 'post from' . $daysAgo . ' days ago';
 })->name('posts.recent.index')->middleware('auth');
 
 Route::prefix('/fun')->name('fun.')->group(function() use($posts){
