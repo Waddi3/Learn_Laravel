@@ -5,7 +5,9 @@ use App\Http\Controllers\HomeControler;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -107,5 +109,8 @@ Route::prefix('/fun')->name('fun.')->group(function() use($posts){
     Route::get('download', function () use ($posts) {
         return response()->download(public_path('/Screenshot from 2024-08-25 13-59-44.png'), 'screenshot');
     })->name('download');
+
+    Auth::routes();
 });
+
 
