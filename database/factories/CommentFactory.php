@@ -1,32 +1,22 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker;
 use App\Models\BlogPost;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
- */
+
 class CommentFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     protected $model = Comment::class;
+
     public function definition(): array
     {
         return [
             'content' => $this->faker->text,
-            'blog_post_id' => BlogPost::factory(), // إنشاء منشور مدونة وربطه مع التعليق
+            'created_at'=> $this->faker->dateTimeBetween('-3 months'),
+            // هنا لا نستخدم blog_post_id مباشرة، بل يجب تعريف العلاقة polymorphic
+            // 'commentable_id' و 'commentable_type' سيتم تعريفها في الـ seeder 
         ];
     }
 }
-
-// $factory->define(Comment::class, function(Faker $faker){
-// return[
-//     'content'=> $faker->text,
-// ];
-// });

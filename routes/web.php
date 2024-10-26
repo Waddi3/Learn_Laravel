@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeControler;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostTagController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserCommentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +34,14 @@ use Illuminate\Support\Facades\Route;
 // })->name('home.contact');
 
 Route::get('/', [HomeControler::class, 'home'])
-    ->name('home.index');
-
+    ->name('welcome');
+   // ->middleware('auth')
 Route::get('/contact', [HomeControler::class, 'contact'])
     ->name('home.contact');
+
+Route::get('/secret', [HomeControler::class , 'secret'])
+->name('secret')
+->middleware('can:home.secret');
 
 Route::get('single', AboutController::class);
 
@@ -93,7 +102,7 @@ Route::prefix('/fun')->name('fun.')->group(function() use($posts){
     Route::get('back', function () {
         return back();
     })->name('back');
-
+    
     Route::get('named-route', function () {
         return redirect()->route('posts.show', ['id' => 1]);
     })->name('named-rout');
@@ -110,7 +119,29 @@ Route::prefix('/fun')->name('fun.')->group(function() use($posts){
         return response()->download(public_path('/Screenshot from 2024-08-25 13-59-44.png'), 'screenshot');
     })->name('download');
 
+    Route::get('/posts/tag/{tag}', [PostTagController::class, 'index'])->name('posts.tags.index');
+
+    Route::resource('posts.comments', PostCommentController::class)->only(['index','store']);
+
+    Route::resource('users.comments', UserCommentController::class)->only(['store']);
+
+    Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
+
     Auth::routes();
+    //Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+});
+
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
 

@@ -3,9 +3,9 @@
 @section('title', 'create the post')
 
 @section('content')
-<form action="{{route('posts.store')}}" method="POST">
+<form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     @include('posts.partials.form')
-    <div><input type="submit" value="Create" class="btn btn-primary btn-block"></div>
+    <button type="submit" class="btn btn-primary btn-block">Create!</button>
 </form>
 @endsection

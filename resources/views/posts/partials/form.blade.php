@@ -7,14 +7,18 @@
 @enderror
 <div class="form-group">
     <label for="content">Content</label>
+    {{-- <input type="text" name="content" class="form-control"
+    value="{{old('content', $post->content ?? null)}}"/> --}}
     <textarea class="form-control" id="content" name="content">{{old('content', optional($post ?? null)->content)}}</textarea>
 </div>
-@if ($errors->any())
-<div class="mb-3">
-    <ul class="list-group">
-        @foreach ($errors->all() as $error)
-            <li class="list-group-item list-group-item-danger">{{$error}}</li>
-        @endforeach
-    </ul>
+
+<div class="form-group">
+    <label for="title">Thumbnail</label>
+    <input id="title" type="file" name="thumbnail" class="form-control-fail"/>
+
 </div>
-@endif
+
+@component('components.errors')    
+@endcomponent
+
+

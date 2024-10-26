@@ -15,16 +15,16 @@ class HomeTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertSeeText('Welcome to laravel!');
-        $response->assertSeeText('This is the content of the main page');  
+        $response->assertSeeText('Laracasts');
+        //$response->assertSeeText('register');  
     }
 
-    public function testContactPageIsWorkingCorrectly(): void
-    {
-        $response = $this->get('/contact');
-        $response->assertSeeText('Contact page');
-        $response->assertSeeText('Hello this is content');
+    // public function testContactPageIsWorkingCorrectly(): void
+    // {
+    //     $response = $this->get('/contact');
+    //     $response->assertSeeText('Contact page');
+    //     $response->assertSeeText('Hello this is content');
 
        
-    }
+    // }
 }

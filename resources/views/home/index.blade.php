@@ -18,10 +18,22 @@
 @endphp
 @endwhile
 @endsection --}}
-@extends('layouts.app')
+
+
+{{-- @extends('layouts.app')
 @section('title', 'Home page')
 @section('content')
 
 <h2>Welcome to laravel!</h2>
 <h3>This is the content of the main page</h3>
+@endsection --}}
+
+
+@extends('layouts.app')  <!-- استخدام layout الرئيسي -->
+
+@section('title', 'Home page')  <!-- تمرير عنوان الصفحة -->
+
+@section('content')
+    <h2>Welcome to Laravel!</h2>
+    <h3>This is the content of the main page</h3>
 @endsection
